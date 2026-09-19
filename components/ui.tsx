@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { site } from "@/lib/data";
 import { GithubIcon } from "@/components/Navbar";
 
@@ -33,20 +32,25 @@ export function Tag({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function CTAButtons() {
+export function CTAButtons({
+  onContactClick,
+}: {
+  onContactClick: () => void;
+}) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
-      <Link
-        href={`mailto:${site.contactEmail}`}
-        className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-7 text-sm font-semibold text-background transition-all hover:bg-accent-muted"
+      <button
+        type="button"
+        onClick={onContactClick}
+        className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-7 text-sm font-semibold text-background shadow-[0_10px_40px_-12px_rgba(163,230,53,0.45)] transition-all hover:bg-accent-muted hover:shadow-[0_14px_50px_-12px_rgba(163,230,53,0.55)] active:scale-[0.98]"
       >
         Let&apos;s Work Together
-      </Link>
+      </button>
       <a
         href={site.githubUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line bg-surface px-7 text-sm font-medium text-foreground transition-all hover:border-accent/60 hover:text-accent"
+        className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line bg-surface px-7 text-sm font-medium text-foreground transition-all hover:border-accent/60 hover:text-accent active:scale-[0.98]"
       >
         <GithubIcon className="h-4 w-4" />
         GitHub

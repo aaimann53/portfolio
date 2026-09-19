@@ -1,136 +1,108 @@
-import { projects, type Project } from "@/lib/data";
-import { SectionHeading, Tag } from "@/components/ui";
-import { Placeholder } from "@/components/Placeholder";
+import { projects, site, type Project } from "@/lib/data";
+import { SectionHeading } from "@/components/ui";
 
-const cardHover =
-  "flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-all duration-300 will-change-transform hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)]";
+const pad = (n: number) => String(n).padStart(2, "0");
 
-function CardImage({ project }: { project: Project }) {
-  const { image, title } = project;
+function ArrowIcon() {
   return (
-    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-line bg-surface">
-      {image ? (
-        // Real screenshot mode: drop an image in /public and set project.image.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={image}
-          alt={`${title} screenshot`}
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-          loading="lazy"
-        />
-      ) : (
-        <div className="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-          <Placeholder project={project} />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      className="h-3.5 w-3.5"
+      aria-hidden="true"
+    >
+      <path
+        d="M7.5 16.5 16.5 7.5M9.5 7.5h7v7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  // Each project can link to its own repo; until then the card opens the
+  // GitHub profile set in `site.githubUrl`.
+  const href = project.href ?? site.githubUrl;
+  const external = href.startsWith("http");
+
+  return (
+    <a
+      href={href}
+      {...(external
+        ? {
+            target: "_blank",
+            rel: "noopener noreferrer",
+            "aria-label": `${project.title} (opens in a new tab)`,
+          }
+        : {})}
+      className="group flex flex-col rounded-xl border border-line bg-surface p-6 transition-[background-color,border-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-surface-2"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex min-w-0 items-start gap-3.5">
+          {project.image && (
+            // Real thumbnail mode: drop a square image in /public and set it.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={project.image}
+              alt=""
+              loading="lazy"
+              className="h-10 w-10 shrink-0 rounded-lg border border-line object-cover"
+            />
+          )}
+
+          <div className="min-w-0">
+            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted/80">
+              {pad(index + 1)} · {project.category}
+            </p>
+            <h3 className="mt-2 text-[17px] font-semibold tracking-tight text-foreground">
+              {project.title}
+            </h3>
+          </div>
         </div>
-      )}
-    </div>
+
+        <span
+          aria-hidden="true"
+          className="mt-1 shrink-0 text-muted transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
+        >
+          <ArrowIcon />
+        </span>
+      </div>
+
+      <p className="mt-4 text-sm leading-relaxed text-muted">
+        {project.description}
+      </p>
+
+      <ul className="mt-auto flex flex-wrap gap-x-3.5 gap-y-1 pt-6 text-[13px] text-muted/80">
+        {project.tech.map((tech) => (
+          <li key={tech}>{tech}</li>
+        ))}
+      </ul>
+    </a>
   );
 }
 
 export function Work() {
-  const featured = projects.find((p) => p.featured)!;
-  const rest = projects.filter((p) => !p.featured);
-
   return (
-    <section id="work" className="w-full">
+    <section id="work" className="w-full border-t border-line">
       <div className="mx-auto w-full max-w-5xl px-6 py-20 sm:py-28">
-        <SectionHeading eyebrow="Portfolio" title="Selected Work" />
+        <SectionHeading
+          eyebrow="Projects"
+          title="Selected Work"
+          className="[&>h2]:uppercase [&>h2]:tracking-[0.02em]"
+        />
 
-        <div className="mt-12 space-y-20">
-          {/* Featured project — Meezban */}
-          <article className={cardHover}>
-            <div className="relative">
-              <CardImage project={featured} />
-              <span className="absolute left-4 top-4 rounded-full border border-line bg-background/80 px-3 py-1 text-xs font-medium text-foreground backdrop-blur-md">
-                Featured Project
-              </span>
-            </div>
+        <p className="mt-5 max-w-2xl text-pretty leading-relaxed text-muted">
+          Things I&apos;ve built, contributed to, and explored across mobile, web,
+          AI, and software development.
+        </p>
 
-            <div className="flex flex-1 flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-              <div className="max-w-xl">
-                <h3 className="text-2xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-accent">
-                  {featured.title}
-                </h3>
-                {featured.tagline && (
-                  <p className="mt-1 text-sm font-medium text-accent">
-                    {featured.tagline}
-                  </p>
-                )}
-                <p className="mt-3 leading-relaxed text-muted">
-                  {featured.description}
-                </p>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {featured.tech.map((t) => (
-                    <Tag key={t}>{t}</Tag>
-                  ))}
-                </div>
-
-                {featured.features && (
-                  <ul className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    {featured.features.map((f) => (
-                      <li
-                        key={f}
-                        className="flex items-center gap-2 text-sm text-muted"
-                      >
-                        <svg
-                          viewBox="0 0 24 24"
-                          className="h-4 w-4 shrink-0 text-accent"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                        >
-                          <path
-                            d="M5 13l4 4L19 7"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              <div className="shrink-0 lg:pt-8">
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-line bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-all hover:border-accent/60 hover:text-accent"
-                >
-                  View Case Study
-                  <span
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                    aria-hidden="true"
-                  >
-                    →
-                  </span>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          {/* Other projects */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {rest.map((project) => (
-              <article key={project.title} className={cardHover}>
-                <CardImage project={project} />
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="text-lg font-semibold tracking-tight text-foreground transition-colors group-hover:text-accent">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-                    {project.description}
-                  </p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <Tag key={t}>{t}</Tag>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
+          ))}
         </div>
       </div>
     </section>

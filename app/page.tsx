@@ -14,7 +14,6 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
-        <div className="mx-auto h-px w-full max-w-5xl bg-line" />
         <Work />
         <About />
         <Experience />

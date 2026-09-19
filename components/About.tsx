@@ -1,4 +1,6 @@
+import { education } from "@/lib/data";
 import { SectionHeading } from "@/components/ui";
+import { EducationEntry } from "@/components/EducationEntry";
 
 export function About() {
   return (
@@ -14,6 +16,18 @@ export function About() {
             Flutter to web platforms and APIs, I focus on practical, real-world
             functionality that delivers a great experience.
           </p>
+        </div>
+
+        <div className="mt-16">
+          <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+            Education
+          </h3>
+
+          <div className="mt-8 divide-y divide-line">
+            {education.map((item) => (
+              <EducationEntry key={`${item.period}-${item.title}`} item={item} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
