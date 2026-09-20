@@ -1,0 +1,97 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 0 512 512"
+  width="512"
+  height="512"
+  role="img"
+  aria-label="Army Burn Hall College"
+>
+  <defs>
+    <path id="abh-top" d="M 40 256 A 216 216 0 1 1 472 256" fill="none" />
+  </defs>
+
+  <!-- Rings -->
+  <circle cx="256" cy="256" r="253" fill="#d8492b" />
+  <circle cx="256" cy="256" r="242" fill="#2f6ea8" />
+  <circle cx="256" cy="256" r="234" fill="#1b1b47" />
+  <circle cx="256" cy="256" r="226" fill="none" stroke="#d9b877" stroke-width="4" />
+
+  <!-- Ring text -->
+  <text
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="26"
+    letter-spacing="2"
+    fill="#d9b877"
+  >
+    <textPath xlink:href="#abh-top" href="#abh-top" startOffset="50%" text-anchor="middle">
+      ARMY BURN HALL COLLEGE FOR GIRLS
+    </textPath>
+  </text>
+
+  <!-- Eagle -->
+  <g fill="#e0b46a">
+    <!-- wings -->
+    <path d="M248 262 C214 222 168 194 118 184 C152 212 178 244 192 280 C212 268 230 262 248 262 Z" />
+    <path d="M264 262 C298 222 344 194 394 184 C360 212 334 244 320 280 C300 268 282 262 264 262 Z" />
+    <!-- head, beak, body -->
+    <circle cx="256" cy="182" r="20" />
+    <path d="M240 180 L214 189 L240 196 Z" />
+    <path d="M246 200 C230 218 224 244 228 268 L284 268 C288 244 282 218 266 200 Z" />
+    <path d="M232 268 L280 268 L272 318 L240 318 Z" />
+    <!-- tail -->
+    <path d="M240 318 L234 350 L256 336 L278 350 L272 318 Z" />
+    <!-- legs -->
+    <path d="M242 318 l-6 16 h12 z" />
+    <path d="M270 318 l-6 16 h12 z" />
+  </g>
+
+  <!-- Initials -->
+  <text
+    x="172"
+    y="336"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="48"
+    font-weight="700"
+    fill="#e0b46a"
+  >
+    AB
+  </text>
+  <text
+    x="340"
+    y="336"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="48"
+    font-weight="700"
+    fill="#e0b46a"
+  >
+    HC
+  </text>
+
+  <!-- Star -->
+  <path
+    d="M256 344 L262 363 L282 363 L266 375 L272 394 L256 382 L240 394 L246 375 L230 363 L250 363 Z"
+    fill="#e0b46a"
+  />
+
+  <!-- Ribbon -->
+  <g>
+    <path d="M92 400 C150 388 362 388 420 400 L428 440 C362 428 150 428 84 440 Z" fill="#3fa9f5" />
+    <path d="M92 400 C110 396 118 388 116 376 C104 386 92 392 78 394 Z" fill="#2b7fc4" />
+    <path d="M420 400 C402 396 394 388 396 376 C408 386 420 392 434 394 Z" fill="#2b7fc4" />
+    <text
+      x="256"
+      y="424"
+      text-anchor="middle"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="21"
+      letter-spacing="1"
+      font-weight="700"
+      fill="#f0c46a"
+    >
+      QUO NON ASCENDAM
+    </text>
+  </g>
+</svg>

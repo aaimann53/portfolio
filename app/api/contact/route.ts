@@ -13,6 +13,14 @@ const asText = (value: unknown) =>
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/** Keep user input from injecting markup into the HTML email. */
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
 
@@ -46,6 +54,13 @@ export async function POST(request: Request) {
     );
   }
 
+  if (name.length > 200 || email.length > 200) {
+    return NextResponse.json(
+      { error: "That name or email address is a little too long." },
+      { status: 400 },
+    );
+  }
+
   if (message.length > 5000) {
     return NextResponse.json(
       { error: "That message is a little too long." },
@@ -60,13 +75,33 @@ export async function POST(request: Request) {
   const from =
     process.env.CONTACT_FROM_EMAIL ?? "Portfolio Contact <onboarding@resend.dev>";
 
+  // Where submissions land. Kept separate from the public contact address so
+  // the inbox can differ from the address visitors see.
+  const to = process.env.CONTACT_TO_EMAIL?.trim() || site.contactEmail;
+
   const resend = new Resend(apiKey);
   const { error } = await resend.emails.send({
     from,
-    to: [site.contactEmail],
+    to: [to],
     replyTo: email,
     subject: `New project enquiry from ${name}`,
-    text: `${message}\n\n—\n${name}\n${email}`,
+    text: [
+      `Name:  ${name}`,
+      `Email: ${email}`,
+      "",
+      message,
+      "",
+      "—",
+      "Sent from the portfolio contact form. Reply to this email to answer directly.",
+    ].join("\n"),
+    html: [
+      '<div style="font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111">',
+      `<p style="margin:0 0 4px"><strong>${escapeHtml(name)}</strong></p>`,
+      `<p style="margin:0 0 20px">${escapeHtml(email)}</p>`,
+      `<div style="white-space:pre-wrap;padding:16px;border-left:3px solid #a3e635;background:#f6f6f6">${escapeHtml(message)}</div>`,
+      '<p style="margin:20px 0 0;font-size:13px;color:#666">Sent from the portfolio contact form. Reply to this email to answer directly.</p>',
+      "</div>",
+    ].join("\n"),
   });
 
   if (error) {

@@ -1,6 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(onChange: () => void) {
+  const query = window.matchMedia(reducedMotionQuery);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
+const getReducedMotion = () => window.matchMedia(reducedMotionQuery).matches;
+
+// The server can't know the preference, so it renders the animated state and
+// the first client render matches it; the real value arrives after hydration.
+const getReducedMotionOnServer = () => false;
 
 type TypewriterProps = {
   text: string;
@@ -21,18 +35,14 @@ export function Typewriter({
 }: TypewriterProps) {
   const [count, setCount] = useState(0);
   const [deleting, setDeleting] = useState(false);
-  const [animate, setAnimate] = useState(true);
+  const reducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotion,
+    getReducedMotionOnServer,
+  );
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      setAnimate(false);
-      setCount(text.length);
-    }
-  }, [text]);
-
-  useEffect(() => {
-    if (!animate) return;
+    if (reducedMotion) return;
 
     let timeout: ReturnType<typeof setTimeout>;
 
@@ -47,7 +57,20 @@ export function Typewriter({
     }
 
     return () => clearTimeout(timeout);
-  }, [animate, count, deleting, text, typeSpeed, deleteSpeed, holdDuration, restartDelay]);
+  }, [
+    reducedMotion,
+    count,
+    deleting,
+    text,
+    typeSpeed,
+    deleteSpeed,
+    holdDuration,
+    restartDelay,
+  ]);
+
+  // With reduced motion the whole line is shown at once — the mid-type count
+  // stays where it is so the reveal is instant either way.
+  const visible = reducedMotion ? text.length : count;
 
   return (
     <span className={`inline-block text-left ${className}`}>
@@ -56,8 +79,8 @@ export function Typewriter({
       <span aria-hidden="true" className="relative block">
         <span className="invisible">{text}</span>
         <span className="absolute inset-0">
-          {text.slice(0, count)}
-          {animate && (
+          {text.slice(0, visible)}
+          {!reducedMotion && (
             <span className="caret-blink ml-0.5 inline-block h-[1em] w-0.5 translate-y-[0.15em] bg-accent align-middle" />
           )}
         </span>

@@ -7,8 +7,8 @@ export const site = {
     "I design and develop web and mobile applications with polished interfaces, reliable backends, and real-world functionality.",
   availability: "Available for freelance projects",
   githubUrl: "https://github.com/aaimann53?tab=repositories",
-  linkedinUrl: "https://www.linkedin.com/in/aimanjadoon",
-  contactEmail: "aimanjadoon03@gmail.com",
+  linkedinUrl: "https://www.linkedin.com/in/aiman-ayyaz-jadoon-683b1b322",
+  contactEmail: "aaimann.j03@gmail.com",
   nav: [
     { label: "Home", href: "#home" },
     { label: "Work", href: "#work" },
@@ -43,11 +43,11 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "Meezban",
-    category: "Mobile App · Food Delivery",
+    category: "SAAS Platform · Web",
     description:
-      "A complete food ordering and restaurant discovery app, with role-based flows for customers and restaurant admins.",
-    tech: ["Flutter", "Dart", "Firebase", "Node.js", "MongoDB"],
-    href: "https://github.com/Ininsico/Meezban",
+      "A complete food ordering and restaurant discovery , with role-based flows for customers and restaurant admins.",
+    tech: ["TypeScript", "MERN Stack"],
+    href: "https://meezban.vercel.app/",
   },
   {
     title: "Smart Wardrobe",
@@ -55,14 +55,14 @@ export const projects: Project[] = [
     description:
       "A wardrobe management app that helps users organise their closet, build outfits, and plan what to wear.",
     tech: ["Flutter", "Dart", "Firebase"],
-    href: "https://github.com/aaimann53/Wardrobe",
+    href: "https://wardrobe-ruddy-beta.vercel.app/",
   },
   {
     title: "AI-HRMS",
-    category: "AI · HR Management",
+    category: "AI · HR Management Web Platform",
     description:
       "An HR management system with AI-assisted workflows for organising employees, attendance, and payroll.",
-    tech: ["AI", "MERN Stack"],
+    tech: ["Typescript", "MERN Stack"],
     href: "https://github.com/artdevelopers-artbyzefa/HRMS",
   },
   {
@@ -132,7 +132,7 @@ export const experience: TimelineEntry[] = [
     // duration: "3 mos",
     // location: "Islamabad, Pakistan",
     // workMode: "Remote",
-    // logo: "/logos/growstep.png",
+    logo: "/logos/growstep.svg",
     tech: ["Flutter", "Dart", "REST APIs", "UI Development"],
     description:
       "Worked on developing and improving mobile applications using Flutter, focusing on responsive UI, application functionality, API integration, debugging, and delivering polished user experiences.",
@@ -148,6 +148,8 @@ export type EducationItem = {
   period: string;
   /** Optional detail line under the institution. */
   description?: string;
+  /** Logo in /public. The row simply renders without a mark while it's empty. */
+  logo?: string;
 };
 
 export const education: EducationItem[] = [
@@ -155,6 +157,7 @@ export const education: EducationItem[] = [
     title: "BS in Computer Science",
     organisation: "COMSATS University Abbottabad",
     period: "2023–2027",
+    logo: "/logos/comsats.svg",
     // Add a detail line if you like, e.g.
     // description: "Coursework in AI, distributed systems and software engineering.",
   },
@@ -163,6 +166,7 @@ export const education: EducationItem[] = [
     // e.g. title: "Intermediate (FSc)", organisation: "Army Burhall College".
     title: "Army Burhall College",
     period: "2021–2023",
+    logo: "/logos/army-burn-hall.svg",
   },
 ];
 

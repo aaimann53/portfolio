@@ -1,0 +1,48 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 0 512 512"
+  width="512"
+  height="512"
+  role="img"
+  aria-label="COMSATS University Islamabad"
+>
+  <defs>
+    <path id="comsats-top" d="M 34 256 A 222 222 0 1 1 478 256" fill="none" />
+    <path id="comsats-bottom" d="M 34 256 A 222 222 0 1 0 478 256" fill="none" />
+  </defs>
+
+  <circle cx="256" cy="256" r="254" fill="#4a2e83" />
+  <circle cx="256" cy="256" r="196" fill="#ffffff" />
+  <circle cx="256" cy="256" r="188" fill="#1e63b0" />
+
+  <g fill="none" stroke="#ffffff" stroke-width="9">
+    <circle cx="256" cy="256" r="146" />
+    <ellipse cx="256" cy="256" rx="54" ry="146" />
+    <path d="M256 110 V402" />
+  </g>
+
+  <text
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="44"
+    letter-spacing="3"
+    font-weight="600"
+    fill="#ffffff"
+  >
+    <textPath xlink:href="#comsats-top" href="#comsats-top" startOffset="50%" text-anchor="middle">
+      COMSATS UNIVERSITY
+    </textPath>
+  </text>
+
+  <text
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="40"
+    letter-spacing="7"
+    font-weight="600"
+    fill="#ffffff"
+  >
+    <textPath xlink:href="#comsats-bottom" href="#comsats-bottom" startOffset="50%" text-anchor="middle">
+      ISLAMABAD
+    </textPath>
+  </text>
+</svg>
